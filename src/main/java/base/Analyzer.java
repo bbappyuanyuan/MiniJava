@@ -1,5 +1,8 @@
 package base;
 
+import listener.BuildPhase;
+import listener.Phase;
+import listener.CheckIdentifierPhase;
 import org.antlr.v4.gui.TestRig;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -72,11 +75,11 @@ public class Analyzer {
         ParseTree tree = parser.translationUnit();
         System.out.println(tree.toStringTree(parser));
 
-//        ParseTreeWalker walker = new ParseTreeWalker();
-//        DefPhase def = new DefPhase();
-//        walker.walk(def, tree);
-//        // create next phase and feed symbol table info from def to ref phase
-//        RefPhase ref = new RefPhase(def.globals, def.scopes);
-//        walker.walk(ref, tree);
+        List<? super Phase> phases = new ArrayList<Phase>();
+        phases.add(new BuildPhase());
+        phases.add(new CheckIdentifierPhase());
+        ParseTreeWalker walker = new ParseTreeWalker();
+        for (Object phase : phases)
+            walker.walk((Phase) phase, tree);
     }
 }

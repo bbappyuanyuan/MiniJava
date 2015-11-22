@@ -19,11 +19,11 @@ field
     ;
 
 mainMethod
-    :   'public' 'static' 'void' 'main' '(' 'String' '[' ']' IDENTIFIER ')' block
+    :   'public' 'static' 'void' 'main' '(' 'String' '[' ']' IDENTIFIER ')' '{' blockStatement* '}'
     ;
 
 method
-    :   'public' type IDENTIFIER '(' parameters? ')' block
+    :   'public' type IDENTIFIER '(' parameters? ')' '{' blockStatement* '}'
     ;
 
 parameters

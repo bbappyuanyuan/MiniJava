@@ -1,11 +1,23 @@
 class A {
 
-    public int add(int x, int y) {
+    public int bb;
+
+    public int add(int x, int x) {
         int z = x + y;
+        int z;
+        return z;
+    }
+
+    public int add(int x, int y) {
+        int z = x() + y;
+        int z;
         return z;
     }
 
     public static void main(String[] args) {
+        int x = add;
         System.out.println(calc(1, 2));
     }
+
+    public boolean bb;
 }
