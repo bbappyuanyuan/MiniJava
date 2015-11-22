@@ -2,6 +2,7 @@ package listener;
 
 import base.MiniJavaParser;
 import base.Utilities;
+import scope.MethodScope;
 import scope.Scope;
 
 public class CheckIdentifierPhase extends Phase {
@@ -65,6 +66,13 @@ public class CheckIdentifierPhase extends Phase {
                     Utilities.reportUndefinition(ctx.IDENTIFIER().getSymbol(), "method", identifierName);
                 else if (!scope.getGenre().equals("method"))
                     Utilities.reportWrongType(ctx.IDENTIFIER().getSymbol(), "method", scope.getGenre(), identifierName);
+                if (scope != null && scope.getGenre().equals("method")) {
+                    int parameterNum = 0;
+                    if (ctx.expressionList() != null)
+                        parameterNum = ctx.expressionList().expression().size();
+                    if (parameterNum != ((MethodScope) scope).getParameterNum())
+                        Utilities.reportWrongParameterNum(ctx.IDENTIFIER().getSymbol(), ((MethodScope) scope).getParameterNum(), identifierName);
+                }
             } else {
                 if (scope == null)
                     Utilities.reportUndefinition(ctx.IDENTIFIER().getSymbol(), "variable", identifierName);

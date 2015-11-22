@@ -21,6 +21,11 @@ public class Utilities {
 
     public static void reportWrongType(Token t, String x, String y, String id) {
         System.err.printf("line %d:%d %s\n", t.getLine(), t.getCharPositionInLine(),
-                "'" + id + "' is not a(n) " + x + " but a(n) " + y);
+                "'" + id + "' is not a " + x + " but a " + y);
+    }
+
+    public static void reportWrongParameterNum(Token t, int cnt, String id) {
+        System.err.printf("line %d:%d %s\n", t.getLine(), t.getCharPositionInLine(),
+                "method '" + id + "' should have " + cnt + " parameters");
     }
 }

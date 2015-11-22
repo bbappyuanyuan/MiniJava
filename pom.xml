@@ -27,7 +27,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>base.Analyzer</mainClass>
+                            <mainClass>portal.Compiler</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

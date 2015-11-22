@@ -30,4 +30,8 @@ public class MethodScope extends Scope {
         }
         return true;
     }
+
+    public int getParameterNum() {
+        return parameterTypes.size();
+    }
 }
