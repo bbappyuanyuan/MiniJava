@@ -82,6 +82,4 @@ public class Compiler {
         for (Object phase : phases)
             walker.walk((Phase) phase, tree);
     }
-
-
 }

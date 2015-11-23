@@ -10,22 +10,18 @@ public class Utilities {
     }
 
     public static void reportRedefinition(Token t, String type, String id) {
-        System.err.printf("line %d:%d %s\n", t.getLine(), t.getCharPositionInLine(),
-                type + " name '" + id + "' was defined before");
+        reportError(t, type + " name '" + id + "' was defined before");
     }
 
     public static void reportUndefinition(Token t, String type, String id) {
-        System.err.printf("line %d:%d %s\n", t.getLine(), t.getCharPositionInLine(),
-                type + " '" + id + "' is never defined");
+        reportError(t, type + " '" + id + "' is never defined");
     }
 
     public static void reportWrongType(Token t, String x, String y, String id) {
-        System.err.printf("line %d:%d %s\n", t.getLine(), t.getCharPositionInLine(),
-                "'" + id + "' is not a " + x + " but a " + y);
+        reportError(t, "'" + id + "' is not a " + x + " but a " + y);
     }
 
     public static void reportWrongParameterNum(Token t, int cnt, String id) {
-        System.err.printf("line %d:%d %s\n", t.getLine(), t.getCharPositionInLine(),
-                "method '" + id + "' should have " + cnt + " parameters");
+        reportError(t, "method '" + id + "' should have " + cnt + " parameters");
     }
 }
