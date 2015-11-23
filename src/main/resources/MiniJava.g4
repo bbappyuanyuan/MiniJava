@@ -93,7 +93,7 @@ expression
     |   expression '.' IDENTIFIER '(' expressionList? ')'
     |   expression '.' IDENTIFIER
     |   'new' IDENTIFIER '(' ')'
-    |   ('~'|'!') expression
+    |   ('-'|'!') expression
     |   expression ('*' | '/' | '%') expression
     |   expression ('+' | '-') expression
     |   expression ('<=' | '>=' | '>' | '<') expression
