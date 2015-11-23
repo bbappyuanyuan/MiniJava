@@ -16,6 +16,15 @@ public class CheckIdentifierPhase extends Phase {
     // class
     @Override
     public void enterClassDeclaration(MiniJavaParser.ClassDeclarationContext ctx) {
+        if (ctx.IDENTIFIER().size() > 1) {
+            String identifierName = ctx.IDENTIFIER(1).getText();
+            Scope scope = currentScope.resolve(identifierName);
+            if (scope == null || identifierName.equals(ctx.IDENTIFIER(0).getText()))
+                Utilities.reportUndefinition(ctx.IDENTIFIER(1).getSymbol(), "class", identifierName);
+            else if (!scope.getGenre().equals("class")) {
+                Utilities.reportWrongType(ctx.IDENTIFIER(1).getSymbol(), "class", scope.getGenre(), identifierName);
+            }
+        }
         currentScope = scopes.get(ctx);
     }
 

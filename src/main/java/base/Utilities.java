@@ -17,8 +17,8 @@ public class Utilities {
         reportError(t, type + " '" + id + "' is never defined");
     }
 
-    public static void reportWrongType(Token t, String x, String y, String id) {
-        reportError(t, "'" + id + "' is not a " + x + " but a " + y);
+    public static void reportWrongType(Token t, String exp, String cur, String id) {
+        reportError(t, "'" + id + "' is not a " + exp + " but a " + cur);
     }
 
     public static void reportWrongParameterNum(Token t, int cnt, String id) {
