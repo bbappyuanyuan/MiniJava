@@ -1,7 +1,7 @@
 package listener;
 
 import base.MiniJavaParser;
-import base.Utilities;
+import base.ErrorCentre;
 import scope.MethodScope;
 import scope.Scope;
 
@@ -20,9 +20,9 @@ public class CheckIdentifierPhase extends Phase {
             String identifierName = ctx.IDENTIFIER(1).getText();
             Scope scope = currentScope.resolve(identifierName);
             if (scope == null || identifierName.equals(ctx.IDENTIFIER(0).getText()))
-                Utilities.reportUndefinition(ctx.IDENTIFIER(1).getSymbol(), "class", identifierName);
+                ErrorCentre.reportUndefinition(ctx.IDENTIFIER(1).getSymbol(), "class", identifierName);
             else if (!scope.getGenre().equals("class")) {
-                Utilities.reportWrongType(ctx.IDENTIFIER(1).getSymbol(), "class", scope.getGenre(), identifierName);
+                ErrorCentre.reportWrongType(ctx.IDENTIFIER(1).getSymbol(), "class", scope.getGenre(), identifierName);
             }
         }
         currentScope = scopes.get(ctx);
@@ -72,21 +72,21 @@ public class CheckIdentifierPhase extends Phase {
             Scope scope = currentScope.resolve(identifierName);
             if (ctx.getChildCount() > 1) {
                 if (scope == null)
-                    Utilities.reportUndefinition(ctx.IDENTIFIER().getSymbol(), "method", identifierName);
+                    ErrorCentre.reportUndefinition(ctx.IDENTIFIER().getSymbol(), "method", identifierName);
                 else if (!scope.getGenre().equals("method"))
-                    Utilities.reportWrongType(ctx.IDENTIFIER().getSymbol(), "method", scope.getGenre(), identifierName);
+                    ErrorCentre.reportWrongType(ctx.IDENTIFIER().getSymbol(), "method", scope.getGenre(), identifierName);
                 if (scope != null && scope.getGenre().equals("method")) {
                     int parameterNum = 0;
                     if (ctx.expressionList() != null)
                         parameterNum = ctx.expressionList().expression().size();
                     if (parameterNum != ((MethodScope) scope).getParameterNum())
-                        Utilities.reportWrongParameterNum(ctx.IDENTIFIER().getSymbol(), ((MethodScope) scope).getParameterNum(), identifierName);
+                        ErrorCentre.reportWrongParameterNum(ctx.IDENTIFIER().getSymbol(), ((MethodScope) scope).getParameterNum(), identifierName);
                 }
             } else {
                 if (scope == null)
-                    Utilities.reportUndefinition(ctx.IDENTIFIER().getSymbol(), "variable", identifierName);
+                    ErrorCentre.reportUndefinition(ctx.IDENTIFIER().getSymbol(), "variable", identifierName);
                 else if (!scope.getGenre().equals("variable"))
-                    Utilities.reportWrongType(ctx.IDENTIFIER().getSymbol(), "variable", scope.getGenre(), identifierName);
+                    ErrorCentre.reportWrongType(ctx.IDENTIFIER().getSymbol(), "variable", scope.getGenre(), identifierName);
             }
         }
     }

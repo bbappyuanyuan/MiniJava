@@ -1,5 +1,6 @@
 package portal;
 
+import base.ErrorCentre;
 import base.MiniJavaLexer;
 import base.MiniJavaParser;
 import listener.BuildPhase;
@@ -29,7 +30,7 @@ public class Compiler {
     @Option(name = "-rule", usage = "start rule")
     private String rule = "translationUnit";
 
-    @Argument(required = true)
+    @Argument(required = true, usage = "code sources")
     private List<String> inputFiles = new ArrayList<String>();
 
     public static void main(String[] args) throws IOException {
@@ -81,5 +82,7 @@ public class Compiler {
         ParseTreeWalker walker = new ParseTreeWalker();
         for (Object phase : phases)
             walker.walk((Phase) phase, tree);
+
+        ErrorCentre.errPrint();
     }
 }

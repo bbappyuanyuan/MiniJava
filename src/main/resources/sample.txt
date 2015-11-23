@@ -1,4 +1,3 @@
-
 class A extends A {
 
     public int bb;
@@ -10,7 +9,7 @@ class A extends A {
     }
 
     public int add(int x, int y) {
-        int z = x() + y;
+        int z = x() + c;
         int z;
         return z;
     }
@@ -22,6 +21,7 @@ class A extends A {
 
     public boolean bb;
 }
+
 class B {
 
 }
