@@ -3,6 +3,7 @@ package base;
 import org.antlr.v4.runtime.Token;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class ErrorCenter {
     }
 
     public static void print(String[] lines) {
-        errors.sort(new Comparator<Info>() {
+        Collections.sort(errors, new Comparator<Info>() {
             @Override
             public int compare(Info o1, Info o2) {
                 if (o1.x < o2.x) return -1;
