@@ -19,6 +19,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +52,7 @@ public class Compiler {
         for (String inputFile : inputFiles) {
             File file = new File(inputFile);
             if (file.exists()) {
-                System.out.println("============== Analyzing " + inputFile + " ......");
+                System.out.println("============== Analyzing '" + inputFile + "' ......");
                 compile(file.getAbsolutePath());
                 if (gui) try {
                     showGui(file.getAbsolutePath());
@@ -59,7 +61,7 @@ public class Compiler {
                 }
                 System.out.println("============== Done.");
             } else {
-                System.out.println("file " + inputFile + " not found!");
+                System.err.println("file " + inputFile + " not found!");
             }
         }
     }
@@ -74,7 +76,19 @@ public class Compiler {
         MiniJavaLexer lexer = new MiniJavaLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MiniJavaParser parser = new MiniJavaParser(tokens);
-        ParseTree tree = parser.translationUnit();
+        Method method = null;
+        try {
+            method = parser.getClass().getMethod(rule, null);
+        } catch (NoSuchMethodException e) {
+            System.err.println("rule '" + rule + "' not found!");
+            return;
+        }
+        ParseTree tree = null;
+        try {
+            tree = (ParseTree) method.invoke(parser, null);
+        } catch (IllegalAccessException e) {
+        } catch (InvocationTargetException e) {
+        }
 
         List<? super Phase> phases = new ArrayList<Phase>();
         phases.add(new BuildPhase());

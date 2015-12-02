@@ -26,7 +26,7 @@ public class ErrorCentre {
             }
         });
         for (Info error : errors)
-            System.err.printf("line %d:%d %s\n", error.x, error.y, error.msg);
+            System.err.printf("line %d:%d\t%s\n", error.x, error.y, error.msg);
     }
 
     public static void reportRedefinition(Token t, String type, String id) {
