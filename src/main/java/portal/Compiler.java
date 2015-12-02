@@ -1,10 +1,10 @@
 package portal;
 
-import base.ErrorCentre;
+import base.ErrorCenter;
 import base.MiniJavaLexer;
 import base.MiniJavaParser;
 import listener.BuildPhase;
-import listener.CheckIdentifierPhase;
+import listener.CheckPhase;
 import listener.Phase;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -92,11 +92,11 @@ public class Compiler {
 
         List<? super Phase> phases = new ArrayList<Phase>();
         phases.add(new BuildPhase());
-        phases.add(new CheckIdentifierPhase());
+        phases.add(new CheckPhase());
         ParseTreeWalker walker = new ParseTreeWalker();
         for (Object phase : phases)
             walker.walk((Phase) phase, tree);
 
-        ErrorCentre.errPrint();
+        ErrorCenter.print(tokens.getText().split("\n"));
     }
 }

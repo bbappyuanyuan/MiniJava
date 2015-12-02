@@ -1,7 +1,7 @@
 package listener;
 
+import base.ErrorCenter;
 import base.MiniJavaParser;
-import base.ErrorCentre;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 import scope.*;
 
@@ -29,7 +29,7 @@ public class BuildPhase extends Phase {
         String className = ctx.IDENTIFIER(0).getText();
         ClassScope classScope = new ClassScope(className, currentScope);
         if (currentScope.defined(className))
-            ErrorCentre.reportRedefinition(ctx.IDENTIFIER(0).getSymbol(), "class", className);
+            ErrorCenter.reportRedefinition(ctx.IDENTIFIER(0).getSymbol(), "class", className);
         currentScope.define(classScope);
         scopes.put(ctx, classScope);
         currentScope = classScope;
@@ -44,10 +44,10 @@ public class BuildPhase extends Phase {
     @Override
     public void enterMainMethod(MiniJavaParser.MainMethodContext ctx) {
         String mainMethodName = "main";
-        MethodScope methodScope = new MethodScope(mainMethodName, currentScope);
+        MethodScope methodScope = new MethodScope("void", mainMethodName, currentScope);
         methodScope.addParameterType("String[]");
         if (currentScope.defined(mainMethodName))
-            ErrorCentre.reportRedefinition(ctx.IDENTIFIER().getSymbol(), "main method", mainMethodName);
+            ErrorCenter.reportRedefinition(ctx.IDENTIFIER().getSymbol(), "main method", mainMethodName);
         currentScope.define(methodScope);
         scopes.put(ctx, methodScope);
         currentScope = methodScope;
@@ -64,14 +64,14 @@ public class BuildPhase extends Phase {
     @Override
     public void enterMethod(MiniJavaParser.MethodContext ctx) {
         String methodName = ctx.IDENTIFIER().getText();
-        MethodScope methodScope = new MethodScope(methodName, currentScope);
+        MethodScope methodScope = new MethodScope(ctx.type().getText(), methodName, currentScope);
         if (ctx.parameters() != null) {
             List<MiniJavaParser.ParameterContext> parameters = ctx.parameters().parameter();
             for (MiniJavaParser.ParameterContext parameter : parameters)
                 methodScope.addParameterType(parameter.type().getText());
         }
         if (currentScope.defined(methodName))
-            ErrorCentre.reportRedefinition(ctx.IDENTIFIER().getSymbol(), "method", methodName);
+            ErrorCenter.reportRedefinition(ctx.IDENTIFIER().getSymbol(), "method", methodName);
         currentScope.define(methodScope);
         scopes.put(ctx, methodScope);
         currentScope = methodScope;
@@ -101,7 +101,7 @@ public class BuildPhase extends Phase {
         String fieldName = ctx.IDENTIFIER().getText();
         Scope variableScope = new VariableScope(ctx.type().getText(), fieldName, currentScope);
         if (currentScope.defined(fieldName))
-            ErrorCentre.reportRedefinition(ctx.IDENTIFIER().getSymbol(), "field", fieldName);
+            ErrorCenter.reportRedefinition(ctx.IDENTIFIER().getSymbol(), "field", fieldName);
         else {
             currentScope.define(variableScope);
             scopes.put(ctx, variableScope);
@@ -113,7 +113,7 @@ public class BuildPhase extends Phase {
         String parameterName = ctx.IDENTIFIER().getText();
         Scope variableScope = new VariableScope(ctx.type().getText(), parameterName, currentScope);
         if (currentScope.defined(parameterName))
-            ErrorCentre.reportRedefinition(ctx.IDENTIFIER().getSymbol(), "parameter", parameterName);
+            ErrorCenter.reportRedefinition(ctx.IDENTIFIER().getSymbol(), "parameter", parameterName);
         else {
             currentScope.define(variableScope);
             scopes.put(ctx, variableScope);
@@ -125,7 +125,7 @@ public class BuildPhase extends Phase {
         String variableName = ctx.IDENTIFIER().getText();
         Scope variableScope = new VariableScope(ctx.type().getText(), variableName, currentScope);
         if (currentScope.defined(variableName))
-            ErrorCentre.reportRedefinition(ctx.IDENTIFIER().getSymbol(), "variable", variableName);
+            ErrorCenter.reportRedefinition(ctx.IDENTIFIER().getSymbol(), "variable", variableName);
         else {
             currentScope.define(variableScope);
             scopes.put(ctx, variableScope);

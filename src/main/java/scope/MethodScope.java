@@ -6,10 +6,12 @@ import java.util.List;
 
 public class MethodScope extends Scope {
 
+    private String type;
     private List<String> parameterTypes = new ArrayList<String>();
 
-    public MethodScope(String name, Scope parent) {
+    public MethodScope(String type, String name, Scope parent) {
         super(name, parent);
+        this.type = type;
         this.genre = "method";
     }
 
@@ -17,21 +19,15 @@ public class MethodScope extends Scope {
         parameterTypes.add(type);
     }
 
-    public boolean fitParameterTypes(List<String> parameterTypes) {
-        if (this.parameterTypes.size() != parameterTypes.size())
-            return false;
-        Iterator<String> it1 = this.parameterTypes.iterator();
-        Iterator<String> it2 = parameterTypes.iterator();
-        while (it1.hasNext()) {
-            String t1 = it1.next();
-            String t2 = it2.next();
-            if (!t1.equals(t2))
-                return false;
-        }
-        return true;
+    public String getParameterType(int index) {
+        return parameterTypes.get(index);
     }
 
     public int getParameterNum() {
         return parameterTypes.size();
+    }
+
+    public String getType() {
+        return type;
     }
 }

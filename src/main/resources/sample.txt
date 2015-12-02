@@ -1,27 +1,34 @@
-class A extends A {
+class MyClass extends MyClass {
 
-    public int bb;
+    public int v1;
+    public int v1;
 
-    public int add(int x, int x) {
-        int z = x + y;
-        int z;
-        return z;
-    }
-
-    public int add(int x, int y) {
-        int z = x() + c;
-        int z;
-        return z;
+    public void method1() { }
+    public int method1() { }
+    
+    public boolean equal(int x, int y) {
+        int z = x - y;
+        int z1 = x && y;
+        return 1 | 2;
+        return x == y;
     }
 
     public static void main(String[] args) {
-        int x = add(1, 1, 1);
-        System.out.println(calc(1, 2));
+        a = 1;
+        method0(a);
+        int b = 3;
+        v1();
+        method1();
+        int eq0 = equal(1, 2);
+        boolean eq1 = equal(true, false);
+        boolean eq2 = equal(1, 1);
+        Class2 c20 = new Class2();
+        Class2 c21 = null;
+        Class2 c22 = new MyClass();
+        Class2 c23 = false;
+        method1(b);
     }
-
-    public boolean bb;
 }
 
-class B {
-
-}
+class Class2 { }
+class Class2 { }

@@ -42,6 +42,13 @@ public abstract class Scope {
         return parent;
     }
 
+    public Scope getParent(String genre) {
+        Scope s = this;
+        while (s != null && !s.getGenre().equals(genre))
+            s = s.getParent();
+        return s;
+    }
+
     public Map<String, Scope> getChildren() {
         return children;
     }
